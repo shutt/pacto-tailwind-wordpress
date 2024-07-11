@@ -31,7 +31,7 @@ foreach ($gallery as $image) {
           <div class="swiper-slide w-16 h-24 border bg-[#efefef]" data-slide_type="<?php echo $gallery_item->type ?>">
             <?php if ($gallery_item->type === "image") { ?>
               <img loading="lazy" src="<?php echo $gallery_item->url_full ?>"
-                class="w-full h-full object-contain top-0 left-0 absolute select-none" alt="banner <?php echo $key ?>" />
+                class="w-full h-full object-cover top-0 left-0 absolute select-none" alt="banner <?php echo $key ?>" />
             <?php } else if ($gallery_item->type === "video") {
               $extension = pathinfo($gallery_item->url, PATHINFO_EXTENSION);
               ?>
@@ -64,7 +64,7 @@ foreach ($gallery as $image) {
           <?php echo $gallery_item->type ?>">
           <?php if ($gallery_item->type === "image") { ?>
             <img loading="lazy" src="<?php echo $gallery_item->url_full ?>"
-              class="w-full h-full object-contain top-0 left-0 absolute" alt="banner <?php echo $key ?>" />
+              class="w-full h-full object-cover top-0 left-0 absolute" alt="banner <?php echo $key ?>" />
           <?php } else if ($gallery_item->type === "video") {
             $extension = pathinfo($gallery_item->url, PATHINFO_EXTENSION);
             ?>
@@ -174,6 +174,7 @@ foreach ($gallery as $image) {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
       },
+
     });
 
     let player = document.getElementById('video-player');
@@ -209,20 +210,22 @@ foreach ($gallery as $image) {
       function next() {
         swiperImages.slideNext();
       }
-      const trigger_lightbox_elems = document.querySelectorAll('.trigger-lightbox');
-      if (trigger_lightbox_elems) {
-        trigger_lightbox_elems.forEach(it => {
-          it.addEventListener('click', function () {
-            let index = it.dataset.current_index;
-            swiperImages.slideTo(index, 0, false);
+
+    }
+    const trigger_lightbox_elems = document.querySelectorAll('.trigger-lightbox');
+    if (trigger_lightbox_elems) {
+      trigger_lightbox_elems.forEach(it => {
+        it.addEventListener('click', function () {
+          let index = it.dataset.current_index;
+          swiperImages.slideTo(index, 0, false);
+          if (player) {
             player.currentTime = 0;
             player.play()
-            videoPlayStatus = VIDEO_PLAYING_STATE.PLAYING
-          })
+          }
+          videoPlayStatus = VIDEO_PLAYING_STATE.PLAYING
         })
-      }
+      })
     }
-
     function mouseleave(e) {
       var zoomer = e.currentTarget;
       zoomer.style.backgroundSize = "0%";

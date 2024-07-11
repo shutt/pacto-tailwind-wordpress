@@ -65,7 +65,7 @@ if ($video) {
           data-slide_type="<?php echo $image->type ?>">
           <?php if ($image->type === "image") { ?>
             <figure class="zoom zoom-mobile" style="background-image: url(<?php echo $image->url ?>)">
-              <img class="w-full h-full object-contain" loading="lazy" src="<?php echo $image->url ?>" />
+              <img class="w-full h-full object-cover" loading="lazy" src="<?php echo $image->url ?>" />
             </figure>
           <?php } else if ($image->type === "video") {
             $extension = pathinfo($image->url, PATHINFO_EXTENSION);
@@ -76,7 +76,7 @@ if ($video) {
                 <source src="<?php echo $video; ?>" type="video/webm" />
               </video>
               <script>
-                // loadVideoBuffer(document.getElementById("video-player-mobile"), '<?php //echo $image->url   ?>');
+                // loadVideoBuffer(document.getElementById("video-player-mobile"), '<?php //echo $image->url      ?>');
               </script>
           <?php } ?>
         </div>
@@ -84,7 +84,7 @@ if ($video) {
     </div>
     <?php if (count($gallery_final) > 1) { ?>
       <button
-        class="swiper-button-prev  opacity-80 text-primary transition-all duration-300 hover:shadow-btn_hover  hover:opacity-100  rounded-full w-8 h-8 justify-center items-center"
+        class="swiper-button-prev swiper-button-mobile opacity-80 text-primary transition-all duration-300 hover:shadow-btn_hover  hover:opacity-100  rounded-full w-8 h-8 justify-center items-center"
         type="button" aria-label="Previous slide" aria-controls="splide01-track">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M20.4167 10.2083L13.125 17.5L20.4167 24.7917" stroke="#606060" stroke-linecap="round"
@@ -93,7 +93,7 @@ if ($video) {
 
       </button>
       <button
-        class="swiper-button-next  opacity-80 text-primary transition-all duration-300 hover:shadow-btn_hover  hover:opacity-100  rounded-full w-8 h-8 justify-center items-center"
+        class="swiper-button-next swiper-button-mobile opacity-80 text-primary transition-all duration-300 hover:shadow-btn_hover  hover:opacity-100  rounded-full w-8 h-8 justify-center items-center"
         type="button" aria-label="Next slide" aria-controls="splide01-track">
         <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M14.5833 24.7917L21.875 17.5L14.5833 10.2083" stroke="black" stroke-linecap="round"
