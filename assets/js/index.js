@@ -40,7 +40,11 @@
 
     const disableScroll = () => {
       document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = "0.25rem";
+      if (window.innerWidth > 400) {
+        document.body.style.paddingRight = "0.25rem";
+      } else {
+        document.body.style.paddingRight = "0rem";
+      }
     };
     const enableScroll = () => {
       document.body.style.overflow = "auto";
@@ -101,38 +105,110 @@
     if (slides.length > 0) {
       slides.forEach((slide) => {
         slide.addEventListener("click", (e) => {
-          let zoomer = e.srcElement.parentElement;
+          let zoomer = e.target.parentElement;
+          let swiperButtons = document.querySelectorAll(
+            ".swiper-button-mobile"
+          );
+
           if (zoomer.classList.contains("touched")) {
             zoomer.classList.remove("touched");
             swiperMobile.attachEvents();
             enableScroll();
-            zoomer.style.backgroundSize = "0%";
-            e.srcElement.style.opacity = 1;
+            zoomer.style.transform = "scale(1)";
+            e.target.style.opacity = 1;
+            if (swiperButtons.length > 0) {
+              swiperButtons.forEach((b) => {
+                b.style.display = "block";
+              });
+            }
           } else {
             swiperMobile.detachEvents();
-            e.srcElement.style.opacity = 0;
+            disableScroll();
+
+            e.target.style.opacity = 0;
             zoomer.classList.add("touched");
-            zoomer.style.backgroundSize = "340%";
+            zoomer.style.backgroundSize = "100%";
+            zoomer.style.transform = "scale(3.5)";
             zoomer.style.width = "100%";
+            if (swiperButtons.length > 0) {
+              swiperButtons.forEach((b) => {
+                b.style.display = "none";
+              });
+            }
           }
         });
 
+        let touchStart = { x: 0, y: 0 };
+        let touchDistance = { x: 0, y: 0 };
+        let touchFinishDistance = { x: 0, y: 0 };
+
+        slide.addEventListener("touchstart", (e) => {
+          touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+          touchDistance = { x: 0, y: 0 };
+        });
+
+        slide.addEventListener("touchend", (e) => {
+          let zoomer = e.target.parentElement;
+          let values = null;
+          if (zoomer) {
+            values = zoomer.style.transform.split(/\w+\(|\);?/);
+          }
+
+          touchFinishDistance = {
+            x:
+              values.length > 3
+                ? +values[3].split(/,\s?/g)[0].replace("px", "")
+                : 0,
+            y:
+              values.length > 3
+                ? +values[3].split(/,\s?/g)[1].replace("px", "")
+                : 0,
+          };
+        });
+
         slide.addEventListener("touchmove", (e) => {
-          let zoomer = e.srcElement.parentElement;
+          let zoomer = e.target.parentElement;
           if (zoomer.classList.contains("touched")) {
+            e.preventDefault();
             disableScroll();
             swiperMobile.detachEvents();
 
-            zoomer.style.backgroundSize = "340%";
-            zoomer.style.width = "100%";
+            touchDistance = {
+              x: e.touches[0].clientX - touchStart.x,
+              y: e.touches[0].clientY - touchStart.y,
+            };
 
-            let offsetX = e.touches[0].pageX;
-            let offsetY = e.touches[0].pageY;
+            let x = touchFinishDistance.x + touchDistance.x / 2;
+            let y = touchFinishDistance.y + touchDistance.y / 2;
 
-            let x = (offsetX / zoomer.offsetWidth) * 100;
-            let y = (offsetY / zoomer.offsetHeight) * 100;
+            let finalX = 0;
+            let finalY = 0;
+            if (x > zoomer.parentElement.getBoundingClientRect().width - 200) {
+              finalX = zoomer.parentElement.getBoundingClientRect().width - 200;
+            } else if (
+              x <
+              -zoomer.parentElement.getBoundingClientRect().width + 200
+            ) {
+              finalX =
+                -zoomer.parentElement.getBoundingClientRect().width + 200;
+            } else {
+              finalX = x;
+            }
 
-            zoomer.style.backgroundPosition = x + "% " + y + "%";
+            if (y > zoomer.parentElement.getBoundingClientRect().height - 250) {
+              finalY =
+                zoomer.parentElement.getBoundingClientRect().height - 250;
+            } else if (
+              y <
+              -zoomer.parentElement.getBoundingClientRect().height + 250
+            ) {
+              finalY =
+                -zoomer.parentElement.getBoundingClientRect().height + 250;
+            } else {
+              finalY = y;
+            }
+
+            zoomer.style.transform = `scale(3.5) translate(${finalX}px, ${finalY}px)`;
           }
         });
       });

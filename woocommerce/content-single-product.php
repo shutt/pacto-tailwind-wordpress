@@ -68,33 +68,19 @@ $gamas = wp_get_post_terms($id, array('gamas'), array("fields" => "names"));
         <div class="hidden lg:block h-auto overflow-hidden">
           <?php get_template_part('woocommerce/single-product/product-gallery-desktop'); ?>
         </div>
-        <div class="block lg:hidden h-[400px]">
+        <div class="block lg:hidden h-[460px]">
           <?php get_template_part('woocommerce/single-product/product-image-gallery'); ?>
         </div>
       </div>
       <div class="py-4 lg:py-12 lg:px-4 lg:pl-32 relative">
         <div class="flex flex-col max-w-[545px] sticky top-[170px]">
-          <div class="flex flex-row justify-start space-x-2 order-2 lg:order-1 mt-4 lg:mt-0">
-            <?php if (has_term('hunny', 'marca', $id)) { ?>
-              <div class="flex">
-                <span
-                  class="bg-secondary text-[10px] tracking-wider text-graybg uppercase rounded-full px-2 py-[0.15rem] flex">Hunny</span>
-              </div>
-            <?php } ?>
-            <?php if (has_term('aura', 'marca', $id)) { ?>
-              <div class="flex">
-                <span
-                  class="bg-secondary text-[10px] tracking-wider text-graybg uppercase rounded-full px-2 py-[0.15rem] flex">Aura</span>
-              </div>
-            <?php } ?>
-          </div>
           <div class="order-1 lg:order-2 flex-col lg:flex-row flex justify-between items-start mt-4">
-            <div class="flex-shrink-0 flex flex-col">
+            <div class="flex flex-col">
               <h2 class="uppercase font-roboto text-sm mb-1 lg:mb-4 text-black text-left font-normal">
                 <?php echo $gamas ? 'GAMA ' . $gamas[0] : '' ?>
               </h2>
               <h1
-                class="font-roboto text-base md:text-[24px] text-black  xl:text-[32px] text-left font-semibold uppercase ">
+                class="font-roboto text-base md:text-[24px] text-black  xl:text-[32px] xl:leading-9 text-left font-semibold uppercase ">
                 <?php echo $product->get_name(); ?>
               </h1>
               <?php if ($product->get_sku()): ?>

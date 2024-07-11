@@ -68,6 +68,9 @@
 .btn {
   @apply uppercase px-8 py-3 font-roboto text-center gap-2 transition-all duration-300 inline-flex;
 }
+.btn-horizontal-layout {
+  @apply uppercase px-4 py-2 md:px-8 md:py-3 text-sm lg:text-base font-roboto text-center gap-2 transition-all duration-300 inline-flex;
+}
 .btn-primary {
   @apply text-white bg-black border border-black;
   @apply hover:text-black hover:bg-white hover:border-black;
@@ -370,12 +373,13 @@ figure.zoom {
   cursor: zoom-in;
 }
 
-figure.zoom img:hover {
-  @apply opacity-0;
-}
-
-figure.zoom img {
-  @apply transition-opacity duration-200 ease-in-out;
+@media (min-width: 768px) {
+  figure.zoom img:hover {
+    @apply opacity-0;
+  }
+  figure.zoom img {
+    @apply transition-opacity duration-200 ease-in-out;
+  }
 }
 
 .thumbsSwipper .swiper-slide-thumb-active {
