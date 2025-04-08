@@ -26,7 +26,7 @@ foreach ($gallery as $image) {
 <div class="relative aspect-[720/860] flex flex-row items-center h-full gap-8 ">
   <div class="h-full flex items-center">
     <div thumbsSlider="" class="swiper thumbsSwipper h-full">
-      <div class="swiper-wrapper">
+      <div class="swiper-wrapper ">
         <?php foreach ($gallery_final as $key => $gallery_item) { ?>
           <div class="swiper-slide w-16 h-24 border bg-[#efefef]" data-slide_type="<?php echo $gallery_item->type ?>">
             <?php if ($gallery_item->type === "image") { ?>
@@ -145,10 +145,10 @@ foreach ($gallery as $image) {
       slidesPerView: "auto",
       watchSlidesProgress: true,
       direction: "vertical",
-      centeredSlides: true,
       allowTouchMove: false,
     });
 
+    console.log('exec')
     let swiper2 = new Swiper(".swipper-vertical", {
       direction: "vertical",
       thumbs: {

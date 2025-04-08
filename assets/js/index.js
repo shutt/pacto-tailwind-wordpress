@@ -754,5 +754,21 @@
       }
     });
   }
+
+  setTimeout(() => {
+    let swiper_thumbs = document.querySelector(".swiper.thumbsSwipper");
+    if (swiper_thumbs) {
+      let items = swiper_thumbs.children[0].querySelectorAll(".swiper-slide");
+      let parentHeight = swiper_thumbs.getBoundingClientRect().height;
+      let height = 0;
+      items.forEach((i) => {
+        height = height + 10 + i.getBoundingClientRect().height;
+      });
+      let y = (parentHeight - height) / 2;
+      if (y >= 0) {
+        swiper_thumbs.children[0].style.transform = `translate3d(0px, ${y}px, 0px)`;
+      }
+    }
+  }, 200);
   init();
 })();
